@@ -1,0 +1,716 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>logiciel | form2</title>
+</head>
+<body>
+    {% if i %}
+    <div class="sidebar">
+
+        <div class="logo">Somkiéta</div>
+            <ul class="menu">
+                <li class="active">
+                    <a href="{% url 'dashboard' %}">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Tableau de bord</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'config' %}">
+                        <div>
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                            <span>Configuration</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'reservation' %}">
+                        <div>
+                            <i class="fa-solid fa-house-chimney-user"></i>
+                            <span>Réservation</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'outil' %}">
+                        <div>
+                            <i class="fa-solid fa-list-check"></i>
+                            <span>Outils de ménages</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'travaux' %}">
+                        <div>
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <span>Travaux particuliers</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'personnel' %}">
+                        <div>
+                            <i class="fa-solid fa-users-viewfinder"></i>
+                            <span>Personnel Hotelier</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="logout">
+                    <a href="{% url 'log_out' %}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Deconnexion</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main--content">
+            <div class="header--wrapper">
+                <div class="header--title">
+                    <h2>Configuration</h2>
+                    <span>Acceuil / Configuration / Detail Hotel</span>
+                </div>
+                <div class="user--info">
+                    <div class="search--box">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" placeholder="Recherche">
+                    </div>
+                    <i class="fa-solid fa-user"></i>
+                    <span>{{mail}}</span>
+                </div>
+            </div>
+
+            <div class="card--container">
+                <h2>Configuration de votre établissement | <span style="color: rgb(164, 165, 167); font-size: 25px;" id="current-date-time"></span></h2> 
+                <div class="card--wrapper">
+                        
+                        <!-- <div class="col-sm-20"> -->
+                            <form action="#" method="post" class="row">
+                                {% csrf_token %}
+                                <div class="col-sm-4">
+                                    <div class="col">
+                                        <label  class="form-label">Nom de l'Hotel</label>
+                                        <input type="text" name="nom_hotel" class="form-control" value="{{i.nom_hotel}}">
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Ville</label>
+                                        <input type="text" name="ville" class="form-control" value="{{i.ville}}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="col">
+                                        <label class="form-label">Adresse</label>
+                                        <input type="Text" name="adresse" class="form-control" value="{{i.adresse}}">
+                                    </div>
+    
+                                    <div class="col">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" name="email" class="form-control" value="{{i.email}}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="col">
+                                        <label class="form-label">Nombre d'étoiles</label>
+                                        <select class="form-control" name="etoile" aria-label="Default select example" value="{{i.etoile}}">
+                                            <option selected class="text-center">--Choix--</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Contact</label>
+                                        <input type="text" name="Telephone" class="form-control" value="{{i.Telephone}}">
+                                    </div>
+                                </div>
+                                <label for="#">.</label>
+                                <hr>
+                                <h4>Qu'est-ce que vous offrez dans votre établissement ?</h4>
+                                <p>Si vous désirer autoriser les réservations de chambre en ligne à partir d'internet, vous pouvez repondre aux questions ci-desous</p>
+                                <hr>
+
+                                <div class="col-sm-4">
+                                    <div class="col">
+                                        <label for="#" class="form-label">Parking</label>
+                                        <select class="form-select" name="parking" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+    
+                                    <div class="col">
+                                        <label class="form-label">Boite de nuit</label>
+                                        <select class="form-select" name="boite" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+    
+                                    <div class="col">
+                                        <label class="form-label">Situé en bordure d'eau</label>
+                                        <select class="form-select" name="bordure" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Restaurant Africain</label>
+                                        <select class="form-select" name="africain" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Restaurant Européenne</label>
+                                        <select class="form-select" name="europe" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Buffet</label>
+                                        <select class="form-select" name="buffet" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Caméra de surveillance</label>
+                                        <select class="form-select" name="camera" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Paiement par Mobile Money</label>
+                                        <select class="form-select" name="paiement" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="col">
+                                        <label for="#" class="form-label">Piscine</label>
+                                        <select class="form-select" name="piscine" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+    
+                                    <div class="col">
+                                        <label class="form-label">Pleine Air</label>
+                                        <select class="form-select" name="air" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+    
+                                    <div class="col">
+                                        <label class="form-label">Accès facile</label>
+                                        <select class="form-select" name="acces" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Restaurant Américaine</label>
+                                        <select class="form-select" name="amerique" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Wifi</label>
+                                        <select class="form-select" name="wifi" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Outil de repassage</label>
+                                        <select class="form-select" name="repassage" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Salle de conférence</label>
+                                        <select class="form-select" name="conference" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Paiement par Carte Bancaire</label>
+                                        <select class="form-select" name="carte" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="col">
+                                        <label for="#" class="form-label">Bar</label>
+                                        <select class="form-select" name="bar" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+    
+                                    <div class="col">
+                                        <label class="form-label">Salle de reunion</label>
+                                        <select class="form-select" name="reunion" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+    
+                                    <div class="col">
+                                        <label class="form-label">Restaurant local</label>
+                                        <select class="form-select" name="local" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Restaurant Asiatique</label>
+                                        <select class="form-select" name="asiatique" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Accès aux handicapés</label>
+                                        <select class="form-select" name="handicap" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Extincteur</label>
+                                        <select class="form-select" name="extincteur" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Parking Privée</label>
+                                        <select class="form-select" name="parking_prive" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Autoriser les réservations en ligne</label>
+                                        <select class="form-select" name="reservation" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <label >Action :</label>
+                                <div class="col">
+                                    <button type="submit" class="btn btn-success">Enregistrer</button>
+                                </div>
+                            </form> 
+                       <!--  </div> -->
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+    {% else %}
+    <div class="sidebar">
+
+        <div class="logo">Somkiéta</div>
+            <ul class="menu">
+                <li class="active">
+                    <a href="{% url 'dashboard' %}">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Tableau de bord</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'config' %}">
+                        <div>
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                            <span>Configuration</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'reservation' %}">
+                        <div>
+                            <i class="fa-solid fa-house-chimney-user"></i>
+                            <span>Réservation</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'outil' %}">
+                        <div>
+                            <i class="fa-solid fa-list-check"></i>
+                            <span>Outils de ménages</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'travaux' %}">
+                        <div>
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <span>Travaux particuliers</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'personnel' %}">
+                        <div>
+                            <i class="fa-solid fa-users-viewfinder"></i>
+                            <span>Personnel Hotelier</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="logout">
+                    <a href="{% url 'log_out' %}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Deconnexion</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main--content">
+            <div class="header--wrapper">
+                <div class="header--title">
+                    <h2>Configuration</h2>
+                    <span>Acceuil / Configuration / Detail Hotel</span>
+                </div>
+                <div class="user--info">
+                    <div class="search--box">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" placeholder="Recherche">
+                    </div>
+                    <i class="fa-solid fa-user"></i>
+                    <span>{{mail}}</span>
+                </div>
+            </div>
+
+            <div class="card--container">
+                <h2>Configuration de votre établissement | <span style="color: rgb(164, 165, 167); font-size: 25px;" id="current-date-time"></span></h2> 
+                <div class="card--wrapper">
+                        
+                        <!-- <div class="col-sm-20"> -->
+                            <form action="#" method="post" class="row">
+                                {% csrf_token %}
+                                <div class="col-sm-4">
+                                    <div class="col">
+                                        <label  class="form-label">Nom de l'Hotel</label>
+                                        <input type="text" name="nom_hotel" class="form-control" required>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Ville</label>
+                                        <input type="text" name="ville" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="col">
+                                        <label class="form-label">Adresse</label>
+                                        <input type="Text" name="adresse" class="form-control" required>
+                                    </div>
+    
+                                    <div class="col">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" name="email" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="col">
+                                        <label class="form-label">Nombre d'étoiles</label>
+                                        <select class="form-control" name="etoile" aria-label="Default select example">
+                                            <option selected class="text-center">--Choix--</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Contact</label>
+                                        <input type="text" name="Telephone" class="form-control" required>
+                                    </div>
+                                </div>
+                                <label for="#">.</label>
+                                <hr>
+                                <h4>Qu'est-ce que vous offrez dans votre établissement ?</h4>
+                                <p>Si vous désirer autoriser les réservations de chambre en ligne à partir d'internet, vous pouvez repondre aux questions ci-desous</p>
+                                <hr>
+
+                                <div class="col-sm-4">
+                                    <div class="col">
+                                        <label for="#" class="form-label">Parking</label>
+                                        <select class="form-select" name="parking" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+    
+                                    <div class="col">
+                                        <label class="form-label">Boite de nuit</label>
+                                        <select class="form-select" name="boite" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+    
+                                    <div class="col">
+                                        <label class="form-label">Situé en bordure d'eau</label>
+                                        <select class="form-select" name="bordure" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Restaurant Africain</label>
+                                        <select class="form-select" name="africain" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Restaurant Européenne</label>
+                                        <select class="form-select" name="europe" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Buffet</label>
+                                        <select class="form-select" name="buffet" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Caméra de surveillance</label>
+                                        <select class="form-select" name="camera" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Paiement par Mobile Money</label>
+                                        <select class="form-select" name="paiement" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="col">
+                                        <label for="#" class="form-label">Piscine</label>
+                                        <select class="form-select" name="piscine" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+    
+                                    <div class="col">
+                                        <label class="form-label">Pleine Air</label>
+                                        <select class="form-select" name="air" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+    
+                                    <div class="col">
+                                        <label class="form-label">Accès facile</label>
+                                        <select class="form-select" name="acces" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Restaurant Américaine</label>
+                                        <select class="form-select" name="amerique" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Wifi</label>
+                                        <select class="form-select" name="wifi" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Outil de repassage</label>
+                                        <select class="form-select" name="repassage" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Salle de conférence</label>
+                                        <select class="form-select" name="conference" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Paiement par Carte Bancaire</label>
+                                        <select class="form-select" name="carte" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="col">
+                                        <label for="#" class="form-label">Bar</label>
+                                        <select class="form-select" name="bar" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+    
+                                    <div class="col">
+                                        <label class="form-label">Salle de reunion</label>
+                                        <select class="form-select" name="reunion" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+    
+                                    <div class="col">
+                                        <label class="form-label">Restaurant local</label>
+                                        <select class="form-select" name="local" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Restaurant Asiatique</label>
+                                        <select class="form-select" name="asiatique" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Accès aux handicapés</label>
+                                        <select class="form-select" name="handicap" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Extincteur</label>
+                                        <select class="form-select" name="extincteur" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Parking Privée</label>
+                                        <select class="form-select" name="parking_prive" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Autoriser les réservations en ligne</label>
+                                        <select class="form-select" name="reservation" aria-label="Default select example">
+                                            <option value="1" class="text-center">Non</option>
+                                            <option value="2">Oui</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <label >Action :</label>
+                                <div class="col">
+                                    <button type="submit" class="btn btn-success">Enregistrer</button>
+                                </div>
+                            </form> 
+                       <!--  </div> -->
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    {% endif %}
+    
+    <script>
+        function updateDateTime() {
+            var now = new Date();
+            var day = now.getDate().toString().padStart(2, '0');
+            var month = (now.getMonth() + 1).toString().padStart(2, '0');
+            var year = now.getFullYear();
+            var hours = now.getHours().toString().padStart(2, '0');
+            var minutes = now.getMinutes().toString().padStart(2, '0');
+            var seconds = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('current-date-time').innerHTML = day + '-' + month + '-' + year + ' ' + hours + ':' + minutes + ':' + seconds;
+        }
+
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

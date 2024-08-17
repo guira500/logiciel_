@@ -1,0 +1,351 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>logiciel | form2</title>
+</head>
+<body>
+    
+    <div class="sidebar">
+
+        <div class="logo">Somkiéta</div>
+            <ul class="menu">
+                <li class="active">
+                    <a href="{% url 'dashboard' %}">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Tableau de bord</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'config' %}">
+                        <div>
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                            <span>Configuration</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'reservation' %}">
+                        <div>
+                            <i class="fa-solid fa-house-chimney-user"></i>
+                            <span>Réservation</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'outil' %}">
+                        <div>
+                            <i class="fa-solid fa-list-check"></i>
+                            <span>Outils de ménages</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'travaux' %}">
+                        <div>
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <span>Travaux particuliers</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'personnel' %}">
+                        <div>
+                            <i class="fa-solid fa-users-viewfinder"></i>
+                            <span>Personnel Hotelier</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="logout">
+                    <a href="{% url 'log_out' %}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Deconnexion</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main--content">
+            <div class="header--wrapper">
+                <div class="header--title">
+                    <h2>Configuration</h2>
+                    <span>Acceuil / Configuration / Chambre</span>
+                </div>
+                <div class="user--info">
+                    <div class="search--box">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" placeholder="Recherche">
+                    </div>
+                    <i class="fa-solid fa-user"></i>
+                    <span>{{mail}}</span>
+                </div>
+            </div>
+
+            <div class="card--container">
+                <h2>Ajouter une nouvelle chambre | <span style="color: rgb(164, 165, 167); font-size: 25px;" id="current-date-time"></span></h2> 
+                <div class="card--wrapper">
+                        
+                        <!-- <div class="col-sm-20"> -->
+                            <form action="#" class="row" method="post">
+                                {% csrf_token %}
+                                <div class="col-sm-4">
+                                    <div class="col">
+                                        <label for="#" class="form-label">Nom du batiment</label>
+                                        <input type="text" name="nom_batiment" class="form-control">
+                                    </div>
+    
+                                    <div class="col">
+                                        <label class="form-label">Image</label>
+                                        <input type="file" name="img" class="form-control">
+                                    </div>
+    
+                                    <div class="col">
+                                        <label class="form-label">Type de lit</label>
+                                        <input type="text" name="type_lit" class="form-control" placeholder="ex : 2 places">
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Ventilateur</label>
+                                        <select class="form-control" name="ventilateur" aria-label="Default select example">
+                                            <option selected class="text-center">--Choix--</option>
+                                            <option value="Oui">Oui</option>
+                                            <option value="Non">Non</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Repas le soir</label>
+                                        <select class="form-control" name="repas_soir" aria-label="Default select example">
+                                            <option selected class="text-center">--Choix--</option>
+                                            <option value="Oui">Oui</option>
+                                            <option value="Non">Non</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Table et chaise</label>
+                                        <select class="form-control" name="table" aria-label="Default select example">
+                                            <option selected class="text-center">--Choix--</option>
+                                            <option value="Oui">Oui</option>
+                                            <option value="Non">Non</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Bagagerie</label>
+                                        <select class="form-control" name="bagages" aria-label="Default select example">
+                                            <option selected class="text-center">--Choix--</option>
+                                            <option value="Oui">Oui</option>
+                                            <option value="Non">Non</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="col">
+                                        <label class="form-label">Nom de la chambre</label>
+                                        <input type="text" name="nom_chambre" class="form-control">
+                                    </div>
+
+                                    <div class="col">
+                                        <label for="#" class="form-label">Type de chambre</label>
+                                        <select class="form-control" name="type_chambre" aria-label="Default select example">
+                                            <option selected class="text-center">--Choix--</option>
+                                            <option value="Premium">Premium</option>
+                                            <option value="Standard">Standard</option>
+                                            <option value="Suite Royale">Suite Royale</option>
+                                        </select>
+                                    </div>
+    
+                                    <div class="col">
+                                        <label class="form-label">Climatiseur</label>
+                                        <select class="form-control" name="climatiseur" aria-label="Default select example">
+                                            <option selected class="text-center">--Choix--</option>
+                                            <option value="Oui">Oui</option>
+                                            <option value="Non">Non</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Repas le matin</label>
+                                        <select class="form-control" name="repas_matin" aria-label="Default select example">
+                                            <option selected class="text-center">--Choix--</option>
+                                            <option value="Oui">Oui</option>
+                                            <option value="Non">Non</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Eau chaude</label>
+                                        <select class="form-control" name="eau_chaude" aria-label="Default select example">
+                                            <option selected class="text-center">--Choix--</option>
+                                            <option value="Oui">Oui</option>
+                                            <option value="Non">Non</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Outil de repassage</label>
+                                        <select class="form-control" name="repassage" aria-label="Default select example">
+                                            <option selected class="text-center">--Choix--</option>
+                                            <option value="Non">Non</option>
+                                            <option value="Oui">Oui</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Nombre de personne</label>
+                                        <select class="form-control" name="nbr_personne" aria-label="Default select example">
+                                            <option selected class="text-center">--Choix--</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="col">
+                                        <label for="#" class="form-label">Prix local</label>
+                                        <input type="number" name="prix_local" class="form-control">
+                                    </div>
+
+                                    <div class="col">
+                                        <label for="#" class="form-label">Prix en ligne</label>
+                                        <input type="number" name="prix_online" class="form-control">
+                                    </div>
+    
+                                    <div class="col">
+                                        <label class="form-label">Numéro de chambre</label>
+                                        <input type="number" name="num_chambre" class="form-control">
+                                    </div>
+    
+                                    <div class="col">
+                                        <label class="form-label">Television</label>
+                                        <select class="form-control" name="television" aria-label="Default select example">
+                                            <option selected class="text-center">--Choix--</option>
+                                            <option value="Oui">Oui</option>
+                                            <option value="Non">Non</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Repas à midi</label>
+                                        <select class="form-control" name="repas_midi" aria-label="Default select example">
+                                            <option selected class="text-center">--Choix--</option>
+                                            <option value="Oui">Oui</option>
+                                            <option value="Non">Non</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Type d'accès</label>
+                                        <select class="form-control" name="type_access" aria-label="Default select example">
+                                            <option selected class="text-center">--Choix--</option>
+                                            <option value="Clé(vachette)">Clé(Vachette)</option>
+                                            <option value="Carte">Carte</option>
+                                            <option value="Reconnaissance faciale">Reconnaissance faciale</option>
+                                            <option value="Emprunte digital">Emprunte digital</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Coffre fort</label>
+                                        <select class="form-control" name="coffre" aria-label="Default select example">
+                                            <option selected class="text-center">--Choix--</option>
+                                            <option value="Oui">Oui</option>
+                                            <option value="Non">Non</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-3">
+                                    <button type="submit" class="btn btn-success">Valider</button>
+                                </div>
+                            
+                            </form>
+                       <!--  </div> -->
+                </div>
+                <br>
+                <h2>Liste des chambres de l'établissement</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nom chambre</th>
+                                <th>Numéro chambre</th>
+                                <th>Type de lit</th>
+                                <th>Nuitée</th>
+                                <th>Nombre de personne</th>
+                                <th>Climatisée</th>
+                                
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for c in ch %}
+                            <tr>
+                                <td>{{c.nom_chambre}}</td>
+                                <td>{{c.num_chambre}}</td>
+                                <td>{{c.type_lit}}</td>
+                                <td>{{c.prix_local}}</td>
+                                <td>{{c.nbr_personne}}</td>
+                                {% if c.climatiseur == 'Oui' %}
+                                <td><input type="button" class="btn btn-success" value="Oui"></td>
+                                {% else %}
+                                <td><input type="button" class="btn btn-danger" value="Non"></td>
+                                {% endif %}
+                                
+                                <!-- <td><input type="button" class="btn btn-danger" value="Non"></td> -->
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="7">total : {{c}}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateDateTime() {
+            var now = new Date();
+            var day = now.getDate().toString().padStart(2, '0');
+            var month = (now.getMonth() + 1).toString().padStart(2, '0');
+            var year = now.getFullYear();
+            var hours = now.getHours().toString().padStart(2, '0');
+            var minutes = now.getMinutes().toString().padStart(2, '0');
+            var seconds = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('current-date-time').innerHTML = day + '-' + month + '-' + year + ' ' + hours + ':' + minutes + ':' + seconds;
+        }
+
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

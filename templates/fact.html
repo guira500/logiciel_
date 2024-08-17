@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Facture</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; width: 100%;">
+    <div style="width: 90%; margin: auto; padding: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <img src="{{ h.logo.url }}" alt="Logo" style="height: 80px;">
+            <h1 style="font-size: 24px; margin: 0;">Facture N° {{ r.id }}</h1>
+        </div>
+        <div style="margin-bottom: 20px;">
+            <p><strong>Date :</strong> {{ t }}</p>
+            <p><strong>Receptionniste :</strong> {{ r.Emp.nom_emp }} {{ r.Emp.prenom_emp }}</p>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+            <div style="width: 48%;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="padding: 5px;"><strong>Hôtel:</strong> {{ h.nom_hotel }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px;">{{ h.adresse }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px;">{{ h.ville }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px;">{{ h.telephone }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px;">{{ h.email }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px;">www.monhotel.com</td>
+                    </tr>
+                </table>
+            </div>
+            <div style="width: 48%;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="padding: 5px;"><strong>Client:</strong> {{ client.nom }} {{ client.prenom }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px;">{{ client.Telephone }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px;">{{ client.ville }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div style="margin-bottom: 20px;">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="background-color: rgba(113, 99, 186, 255); padding: 10px; text-align: left;">Désignation</th>
+                        <th style="background-color: rgba(113, 99, 186, 255); padding: 10px; text-align: left;">Total TTC</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style=" padding: 10px;">Réservation</td>
+                        <td style=" padding: 10px;">{{ r.Chambre.prix_local }} {{ r.Salle.prix_local }}</td>
+                    </tr>
+                    <tr>
+                        <td style=" padding: 10px;">Consommation</td>
+                        <td style=" padding: 10px;">....</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="text-align: right;">
+            <table style="width: 50%; float: right; border-collapse: collapse;">
+                <tr>
+                    <th style=" padding: 10px; text-align: right;">Total TTC</th>
+                    <td style=" padding: 10px; text-align: right;">{{ r.Chambre.prix_local }} {{ r.Salle.prix_local }}</td>
+                </tr>
+            </table>
+        </div>
+        <div style="margin-top: 40px; text-align: center;">
+            <p style="padding: 10px; text-align: left;"><strong>À payer :</strong> <span style="color: red;">{{ r.Chambre.prix_local }} {{ r.Salle.prix_local }} F CFA</span></p>
+            <p style="padding: 10px; text-align: left;"><strong>Mode de règlement :</strong> {{ r.mode_paiement }}</p>
+            <p><strong>Conditions de règlement :</strong> paiement à la fin du séjour à la caisse principale</p>
+            <p>Vérifiez votre monnaie lors du paiement en espèce !</p>
+            <hr>
+            <p>Merci pour votre séjour!</p>
+        </div>
+    </div>
+</body>
+</html>

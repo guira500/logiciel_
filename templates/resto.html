@@ -1,0 +1,418 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>logiciel | form2</title>
+</head>
+<body>
+    {% if Emp.poste == 'Receptionniste' %}
+    <div class="sidebar">
+
+        <div class="logo">Somkiéta</div>
+            <ul class="menu">
+                <li class="active">
+                    <a href="{% url 'dashboard' %}">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Tableau de bord</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'reservation' %}">
+                        <i class="fa-solid fa-house-chimney-user"></i>
+                        <span>Réservation</span>
+                    </a>
+                </li>
+
+                <li class="logout">
+                    <a href="{% url 'log_out' %}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Deconnexion</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main--content">
+            <div class="header--wrapper">
+                <div class="header--title">
+                    <h2>Reservation</h2>
+                    <span>Acceuil/ Reservation/ Restaurant</span>
+                </div>
+                <div class="user--info">
+                    <div class="search--box">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" placeholder="Recherche">
+                    </div>
+                    <i class="fa-solid fa-user"></i>
+                    <span>{{mail}}</span>
+                </div>
+            </div>
+
+            <div class="card--container">
+                <h2>Achat de plats | <span style="color: rgb(164, 165, 167); font-size: 25px;" id="current-date-time"></span></h2> 
+                <br>
+                <div class="card--wrapper">
+                    <form action="#" class="row" method="post">
+                        {% csrf_token %}
+                        <div class="col-sm-4">
+                            <div class="col">
+                                <input class="form-check-input" type="radio" name="choix" id="chambre" value="chambre" checked>
+                                <label class="form-check-label" for="chambre">
+                                    Numéro de chambre
+                                </label>
+                            </div>
+                            <div class="col">
+                                <input class="form-check-input" type="radio" name="choix" id="salle" value="salle">
+                                <label class="form-check-label" for="salle">
+                                    Numéro de salle
+                                </label>
+                            </div>
+                        </div>
+                    
+                        <div class="col-sm-4" id="chambre-field">
+                            <div class="col">
+                                <label class="form-label">Numéro de chambre</label>
+                                <select class="form-control" name="num_chambre" aria-label="Default select example">
+                                    <option selected class="text-center">--Choix--</option>
+                                    {% for chambre in c %}
+                                    <option value="{{ chambre.id }}">{{ chambre.num_chambre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    
+                        <div class="col-sm-4" id="salle-field" style="display: none;">
+                            <div class="col">
+                                <label class="form-label">Numéro de salle</label>
+                                <select class="form-control" name="num_salle" aria-label="Default select example">
+                                    <option selected class="text-center">--Choix--</option>
+                                    {% for salle in s %}
+                                    <option value="{{ salle.id }}">{{ salle.num_salle }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    
+                        <div class="col-sm-4">
+                            <div class="col">
+                                <label class="form-label">Plat</label>
+                                <select class="form-control" name="restau_id" aria-label="Default select example">
+                                    <option selected class="text-center">--Choix--</option>
+                                    {% for plat in res %}
+                                    <option value="{{ plat.id }}">{{ plat.nom_plat }} - {{ plat.prix_unitaire }} FCFA</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    
+                        <div class="col-sm-4">
+                            <div class="col">
+                                <label class="form-label">Quantité</label>
+                                <input type="number" name="quantite" class="form-control" required>
+                            </div>
+                        </div>
+                    
+                        <div class="col-12 mt-3">
+                            <button type="submit" class="btn btn-success">Commander</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="tabular--wrapper">
+                <div class="main--title">
+                    Details Achats
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Numéro Chambre</th>
+                                <th>Nom Chambre</th>
+                                <th>Date de commande</th>
+                                <th>prix total</th>
+                                <th>Plat commander</th>
+                                <th>Client</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for c in consomme %}
+                            <tr>
+                                <td>{{c.reserves.Chambre.num_chambre}}</td>
+                                <td>{{c.reserves.Chambre.nom_chambre}}</td>
+                                <td>{{c.Rest.date_jour}}</td>
+                                <td>{{c.Rest.total}}</td>
+                                <td>{{c.Rest.Restau.nom_plat}}</td>
+                                <td>{{c.Rest.Client.nom}}- {{c.Rest.Client.prenom}}</td>
+                                <td><a href="#"><i class="fa-regular fa-pen-to-square"></i></a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="7">total : {{ct}}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {% else %}
+    <div class="sidebar">
+
+        <div class="logo">Somkiéta</div>
+            <ul class="menu">
+                <li class="active">
+                    <a href="{% url 'dashboard' %}">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Tableau de bord</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'config' %}">
+                        <div>
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                            <span>Configuration</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'reservation' %}">
+                        <div>
+                            <i class="fa-solid fa-house-chimney-user"></i>
+                            <span>Réservation</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'outil' %}">
+                        <div>
+                            <i class="fa-solid fa-list-check"></i>
+                            <span>Outils de ménages</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'travaux' %}">
+                        <div>
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <span>Travaux particuliers</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'personnel' %}">
+                        <div>
+                            <i class="fa-solid fa-users-viewfinder"></i>
+                            <span>Personnel Hotelier</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="logout">
+                    <a href="{% url 'log_out' %}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Deconnexion</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main--content">
+            <div class="header--wrapper">
+                <div class="header--title">
+                    <h2>Reservation</h2>
+                    <span>Acceuil/ Reservation/ Restaurant</span>
+                </div>
+                <div class="user--info">
+                    <div class="search--box">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" placeholder="Recherche">
+                    </div>
+                    <i class="fa-solid fa-user"></i>
+                    <span>{{mail}}</span>
+                </div>
+            </div>
+
+            <div class="card--container">
+                <h2>Achat de plats | <span style="color: rgb(164, 165, 167); font-size: 25px;" id="current-date-time"></span></h2> 
+                <br>
+                <div class="card--wrapper">
+                    <form action="#" class="row" method="post">
+                        {% csrf_token %}
+                        <div class="col-sm-4">
+                            <div class="col">
+                                <input class="form-check-input" type="radio" name="choix" id="chambre" value="chambre" checked>
+                                <label class="form-check-label" for="chambre">
+                                    Numéro de chambre
+                                </label>
+                            </div>
+                            <div class="col">
+                                <input class="form-check-input" type="radio" name="choix" id="salle" value="salle">
+                                <label class="form-check-label" for="salle">
+                                    Numéro de salle
+                                </label>
+                            </div>
+                        </div>
+                    
+                        <div class="col-sm-4" id="chambre-field">
+                            <div class="col">
+                                <label class="form-label">Numéro de chambre</label>
+                                <select class="form-control" name="num_chambre" aria-label="Default select example">
+                                    <option selected class="text-center">--Choix--</option>
+                                    {% for chambre in c %}
+                                    <option value="{{ chambre.id }}">{{ chambre.num_chambre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    
+                        <div class="col-sm-4" id="salle-field" style="display: none;">
+                            <div class="col">
+                                <label class="form-label">Numéro de salle</label>
+                                <select class="form-control" name="num_salle" aria-label="Default select example">
+                                    <option selected class="text-center">--Choix--</option>
+                                    {% for salle in s %}
+                                    <option value="{{ salle.id }}">{{ salle.num_salle }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    
+                        <div class="col-sm-4">
+                            <div class="col">
+                                <label class="form-label">Plat</label>
+                                <select class="form-control" name="restau_id" aria-label="Default select example">
+                                    <option selected class="text-center">--Choix--</option>
+                                    {% for plat in res %}
+                                    <option value="{{ plat.id }}">{{ plat.nom_plat }} - {{ plat.prix_unitaire }} FCFA</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    
+                        <div class="col-sm-4">
+                            <div class="col">
+                                <label class="form-label">Quantité</label>
+                                <input type="number" name="quantite" class="form-control" required>
+                            </div>
+                        </div>
+                    
+                        <div class="col-12 mt-3">
+                            <button type="submit" class="btn btn-success">Commander</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+
+            <div class="tabular--wrapper">
+                <div class="main--title">
+                    Details Achats
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Numéro Chambre</th>
+                                <th>Nom Chambre</th>
+                                <th>Date de commande</th>
+                                <th>prix total</th>
+                                <th>Plat commander</th>
+                                <th>Client</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for c in consomme %}
+                            <tr>
+                                <td>{{c.reserves.Chambre.num_chambre}}</td>
+                                <td>{{c.reserves.Chambre.nom_chambre}}</td>
+                                <td>{{c.Rest.date_jour}}</td>
+                                <td>{{c.Rest.total}}</td>
+                                <td>{{c.Rest.Restau.nom_plat}}</td>
+                                <td>{{c.Rest.Client.nom}}- {{c.Rest.Client.prenom}}</td>
+                                <td><a href="#"><i class="fa-regular fa-pen-to-square"></i></a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="7">total : {{ct}}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    {% endif %}
+
+    <script>
+        function updateDateTime() {
+            var now = new Date();
+            var day = now.getDate().toString().padStart(2, '0');
+            var month = (now.getMonth() + 1).toString().padStart(2, '0');
+            var year = now.getFullYear();
+            var hours = now.getHours().toString().padStart(2, '0');
+            var minutes = now.getMinutes().toString().padStart(2, '0');
+            var seconds = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('current-date-time').innerHTML = day + '-' + month + '-' + year + ' ' + hours + ':' + minutes + ':' + seconds;
+        }
+
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+    </script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const chambreField = document.getElementById('chambre-field');
+        const salleField = document.getElementById('salle-field');
+        
+        document.querySelectorAll('input[name="choix"]').forEach(function (radio) {
+            radio.addEventListener('change', function () {
+                if (this.value === 'chambre') {
+                    chambreField.style.display = 'block';
+                    salleField.style.display = 'none';
+                } else if (this.value === 'salle') {
+                    chambreField.style.display = 'none';
+                    salleField.style.display = 'block';
+                }
+            });
+        });
+    });
+</script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

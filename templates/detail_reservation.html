@@ -1,0 +1,270 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>logiciel | Reservation</title>
+</head>
+<body>
+    {% if Emp.poste == 'Receptionniste' %}
+    <div class="sidebar">
+
+        <div class="logo">Somkiéta</div>
+            <ul class="menu">
+                <li class="active">
+                    <a href="{% url 'dashboard' %}">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Tableau de bord</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="{% url 'reservation' %}">
+                        <div>
+                            <i class="fa-solid fa-house-chimney-user"></i>
+                            <span>Réservation</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="logout">
+                    <a href="{% url 'log_out' %}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Deconnexion</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main--content">
+            <div class="header--wrapper">
+                <div class="header--title">
+                    <h2>Réservation</h2>
+                    <span>Acceuil / Reservation</span>
+                </div>
+                <div class="user--info">
+                    <div class="search--box">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" placeholder="Recherche">
+                    </div>
+                    <i class="fa-solid fa-user"></i>
+                    <span>{{mail}}</span>
+                </div>
+            </div>
+
+
+            <div class="card--container">
+                <div class="card--wrapper">
+                        <div class="payment--card light-red">
+                            <a href="{% url 'list_chbr' %}" style="text-decoration: none;">
+                                <div class="card--header">
+                                    <div class="amount">
+                                        <span class="title">
+                                            Réserver une chambre
+                                        </span>
+                                    </div>
+                                    <i class="fa-solid fa-house-lock"></i>
+                                </div>
+                            </a>
+                        </div>
+                    
+                    <div class="payment--card light-blue">
+                        <a href="{% url 'listeSalle' %}" style="text-decoration: none;">
+                            <div class="card--header">
+                                <div class="amount">
+                                    <span class="title">
+                                        Réserver une Salle
+                                    </span>
+                                </div>
+                                <i class="fa-solid fa-house-chimney-user"></i>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="payment--card light-purple">
+                        <a href="{% url 'historique' %}" style="text-decoration: none;">
+                            <div class="card--header">
+                                <div class="amount">
+                                    <span class="title">
+                                        Historique Réservation
+                                    </span>
+                                </div>
+                                <i class="fa-solid fa-list-ul"></i>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="payment--card light-green">
+                        <a href="{% url 'resto' %}" style="text-decoration: none;">
+                            <div class="card--header">
+                                <div class="amount">
+                                    <span class="title">
+                                        Achat au Restaurant
+                                    </span>
+                                </div>
+                                <i class="fa-solid fa-basket-shopping"></i>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    {% else %}
+    <div class="sidebar">
+
+        <div class="logo">Somkiéta</div>
+            <ul class="menu">
+                <li class="active">
+                    <a href="{% url 'dashboard' %}">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Tableau de bord</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'config' %}">
+                        <div>
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                            <span>Configuration</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'reservation' %}">
+                        <div>
+                            <i class="fa-solid fa-house-chimney-user"></i>
+                            <span>Réservation</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'outil' %}">
+                        <div>
+                            <i class="fa-solid fa-list-check"></i>
+                            <span>Outils de ménages</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'travaux' %}">
+                        <div>
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <span>Travaux particuliers</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'personnel' %}">
+                        <div>
+                            <i class="fa-solid fa-users-viewfinder"></i>
+                            <span>Personnel Hotelier</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="logout">
+                    <a href="{% url 'log_out' %}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Deconnexion</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main--content">
+            <div class="header--wrapper">
+                <div class="header--title">
+                    <h2>Réservation</h2>
+                    <span>Acceuil / Reservation</span>
+                </div>
+                <div class="user--info">
+                    <div class="search--box">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" placeholder="Recherche">
+                    </div>
+                    <i class="fa-solid fa-user"></i>
+                    <span>{{mail}}</span>
+                </div>
+            </div>
+
+
+            <div class="card--container">
+                <div class="card--wrapper">
+                        <div class="payment--card light-red">
+                            <a href="{% url 'list_chbr' %}" style="text-decoration: none;">
+                                <div class="card--header">
+                                    <div class="amount">
+                                        <span class="title">
+                                            Réserver une chambre
+                                        </span>
+                                    </div>
+                                    <i class="fa-solid fa-house-lock"></i>
+                                </div>
+                            </a>
+                        </div>
+                    
+
+                        <div class="payment--card light-blue">
+                            <a href="{% url 'listeSalle' %}" style="text-decoration: none;">
+                                <div class="card--header">
+                                    <div class="amount">
+                                        <span class="title">
+                                            Réserver une Salle
+                                        </span>
+                                    </div>
+                                    <i class="fa-solid fa-house-chimney-user"></i>
+                                </div>
+                            </a>
+                        </div>
+
+                    <div class="payment--card light-purple">
+                        <a href="{% url 'historique' %}" style="text-decoration: none;">
+                            <div class="card--header">
+                                <div class="amount">
+                                    <span class="title">
+                                        Historique Réservation
+                                    </span>
+                                </div>
+                                <i class="fa-solid fa-list-ul"></i>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="payment--card light-green">
+                        <a href="{% url 'resto' %}" style="text-decoration: none;">
+                            <div class="card--header">
+                                <div class="amount">
+                                    <span class="title">
+                                        Achat au Restaurant
+                                    </span>
+                                </div>
+                                <i class="fa-solid fa-basket-shopping"></i>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    {% endif %}
+
+</body>
+</html>

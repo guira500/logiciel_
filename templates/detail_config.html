@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>logiciel | Configuration</title>
+</head>
+<body>
+    
+    <div class="sidebar">
+
+        <div class="logo">Somkiéta</div>
+            <ul class="menu">
+                <li class="active">
+                    <a href="{% url 'dashboard' %}">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Tableau de bord</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'config' %}">
+                        <div>
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                            <span>Configuration</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'reservation' %}">
+                        <div>
+                            <i class="fa-solid fa-house-chimney-user"></i>
+                            <span>Réservation</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'outil' %}">
+                        <div>
+                            <i class="fa-solid fa-list-check"></i>
+                            <span>Outils de ménages</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'travaux' %}">
+                        <div>
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <span>Travaux particuliers</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'personnel' %}">
+                        <div>
+                            <i class="fa-solid fa-users-viewfinder"></i>
+                            <span>Personnel Hotelier</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="logout">
+                    <a href="{% url 'log_out' %}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Deconnexion</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main--content">
+            <div class="header--wrapper">
+                <div class="header--title">
+                    <h2>Configuration</h2>
+                    <span>Acceuil / Configuration</span>
+                </div>
+                <div class="user--info">
+                    <div class="search--box">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" placeholder="Recherche">
+                    </div>
+                    <i class="fa-solid fa-user"></i>
+                    <span>{{mail}}</span>
+                </div>
+            </div>
+
+            <div class="card--container">
+                <div class="card--wrapper">
+
+
+                    <a href="{% url 'hotel' %}" style="text-decoration: none;">
+                        <div class="payment--card light-purple">
+                            <div class="card--header">
+                                <div class="amount">
+                                    <span class="title">
+                                        Detail Hotel
+                                    </span>
+                                </div>
+                                <i class="fa-solid fa-list-ul"></i>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="{% url 'chambre' %}" style="text-decoration: none;">
+                        <div class="payment--card light-red">
+                            <div class="card--header">
+                                <div class="amount">
+                                    <span class="title">
+                                        Chambres
+                                    </span>
+                                </div>
+                                <i class="fa-solid fa-bed"></i>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="{% url 'salles' %}" style="text-decoration: none;">
+                        <div class="payment--card light-purple">
+                            <div class="card--header">
+                                <div class="amount">
+                                    <span class="title">
+                                        Salles
+                                    </span>
+                                </div>
+                                <i class="fa-solid fa-hotel"></i>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="{% url 'restau' %}" style="text-decoration: none;">
+                        <div class="payment--card light-green">
+                            <div class="card--header">
+                                <div class="amount">
+                                    <span class="title">
+                                        Restauration
+                                    </span>
+                                </div>
+                                <i class="fa-solid fa-utensils"></i>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

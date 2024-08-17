@@ -1,0 +1,444 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>logiciel | form</title>
+</head>
+<body>
+    {% if Emp.poste == 'Receptionniste' %}
+    <div class="sidebar">
+
+        <div class="logo">Somkiéta</div>
+            <ul class="menu">
+                <li class="active">
+                    <a href="{% url 'dashboard' %}">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Tableau de bord</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'reservation' %}">
+                        <div>
+                            <i class="fa-solid fa-house-chimney-user"></i>
+                            <span>Réservation</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="logout">
+                    <a href="{% url 'log_out' %}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Deconnexion</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main--content">
+            <div class="header--wrapper">
+                <div class="header--title">
+                    <h2>Réservation</h2>
+                    <span>Acceuil / Reservation/ Chambre/ Info Client</span>
+                </div>
+                <div class="user--info">
+                    <div class="search--box">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" placeholder="Recherche">
+                    </div>
+                    <i class="fa-solid fa-user"></i>
+                    <span>{{mail}}</span>
+                </div>
+            </div> 
+
+            <div class="card--container">
+                <h2>Etape 2: Informations du client | <span style="color: rgb(164, 165, 167); font-size: 25px;" id="current-date-time"></span></h2> 
+                <br><br>
+                <div class="card--wrapper">
+
+                    <div class="col-sm-3">
+                        <div class="card" style="width: 13rem; border-radius: 30px; box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;">
+                            <img src="{{c.img.url}}" class="card-img-top" style="border-radius: 25px;" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title text-center" style="color: rgba(113, 99, 186, 255);">{{c.nom_chambre}}</h5>
+                                <hr>
+                                <p class="card-text text-center"><strong>Batiment :</strong>{{c.nom_batiment}}</p>
+                                <p class="card-text text-center"><strong>Prix :</strong>{{c.prix_local}} FCFA</p>
+                                <p class="card-text text-center"><strong>Numéro ch :</strong>{{c.num_chambre}}</p>
+                                <p class="card-text text-center"><strong>Type de lit :</strong>{{c.type_lit}}</p>
+                                <p class="card-text text-center"><strong>Nbre Personnes :</strong>{{c.nbr_personne}}</p>
+                            </div>
+                        </div>
+                    </div>
+                        <br><br><br>
+                        <div class="col-sm-8">
+                            <form action="#" class="row" method="post">
+                                {% csrf_token %}
+                                <div class="col-sm-4">
+                                    <div class="col">
+                                        <label  class="form-label">Nom</label>
+                                        <input type="text" name="nom" class="form-control" required>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Prénoms</label>
+                                        <input type="text" name="prenom" class="form-control" required>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Telephone</label>
+                                        <input type="text" name="Telephone" class="form-control" required>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Provenance</label>
+                                        <input type="Text" name="provenance" class="form-control" required>
+                                    </div>  
+                                </div>
+                                
+                                <div class="col-sm-4">
+                                    <div class="col">
+                                        <label for="#" class="form-label">Type de pièce</label>
+                                        <select class="form-control" name="type_piece" aria-label="Default select example">
+                                            <option selected class="text-center">--Choix--</option>
+                                            <option value="CNIB">CNIB</option>
+                                            <option value="PASSEPORT">PASSEPORT</option>
+                                            <option value="CARTE CONSULAIRE">CARTE CONSULAIRE</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Numéro de la pièce</label>
+                                        <input type="text" name="num_piece" class="form-control" required>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Date d'expiration pièce</label>
+                                        <input type="date" name="date_expire" class="form-control" required>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Email</label>
+                                        <input type="email"  name="email" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    
+                                    <div class="col">
+                                        <label class="form-label">Date d'arrivée</label>
+                                        <input type="date" id="date_arriver" name="date_arriver" class="form-control" required>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Date de départ</label>
+                                        <input type="date" id="date_depart" name="date_depart" class="form-control" required>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Mode de paiement</label>
+                                        <select class="form-control" name="mode_paye" aria-label="Default select example" required>
+                                            <option selected class="text-center">--Choix--</option>
+                                            <option value="Mobile Money">Mobile Money</option>
+                                            <option value="Virement Bancaire">Virement Bancaire</option>
+                                            <option value="Chèque">Chèque</option>
+                                            <option value="Espèce">Espèce</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Prix de la chambre</label>
+                                        <input type="text" id="prix_local" name="prix_local" readonly value="{{ c.prix_local }} FCFA" class="form-control">
+                                    </div>
+                                </div>
+                                <label>.</label>
+                                <h5 class="alert alert-info">
+                                    <p>Nombre de jour(s): <span id="nombre_de_jours"></span></p>
+                                    <p>Total à payer: <span id="total_a_payer"></span></p>
+                                </h5>
+                                <button type="submit" class="btn btn-success">Valider</button>
+                            </form> 
+                        </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {% else %}
+    <div class="sidebar">
+
+        <div class="logo">Somkiéta</div>
+            <ul class="menu">
+                <li class="active">
+                    <a href="{% url 'dashboard' %}">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Tableau de bord</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'config' %}">
+                        <div>
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                            <span>Configuration</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'reservation' %}">
+                        <div>
+                            <i class="fa-solid fa-house-chimney-user"></i>
+                            <span>Réservation</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'outil' %}">
+                        <div>
+                            <i class="fa-solid fa-list-check"></i>
+                            <span>Outils de ménages</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'travaux' %}">
+                        <div>
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <span>Travaux particuliers</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'personnel' %}">
+                        <div>
+                            <i class="fa-solid fa-users-viewfinder"></i>
+                            <span>Personnel Hotelier</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="logout">
+                    <a href="{% url 'log_out' %}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Deconnexion</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main--content">
+            <div class="header--wrapper">
+                <div class="header--title">
+                    <h2>Réservation</h2>
+                    <span>Acceuil / Reservation/ Chambre/ Info Client</span>
+                </div>
+                <div class="user--info">
+                    <div class="search--box">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" placeholder="Recherche">
+                    </div>
+                    <i class="fa-solid fa-user"></i>
+                    <span>{{mail}}</span>
+                </div>
+            </div>
+
+            <div class="card--container">
+                <h2>Etape 2: Informations du client | <span style="color: rgb(164, 165, 167); font-size: 25px;" id="current-date-time"></span></h2>
+                <br><br>
+                <div class="card--wrapper">
+
+                    <div class="col-sm-3">
+                        <div class="card" style="width: 13rem; border-radius: 30px; box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;">
+                            <img src="{{c.img.url}}" class="card-img-top" style="border-radius: 25px;" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title text-center" style="color: rgba(113, 99, 186, 255);">{{c.nom_chambre}}</h5>
+                                <hr>
+                                <p class="card-text text-center"><strong>Batiment :</strong>{{c.nom_batiment}}</p>
+                                <p class="card-text text-center"><strong>Prix :</strong>{{c.prix_local}} FCFA</p>
+                                <p class="card-text text-center"><strong>Numéro ch :</strong>{{c.num_chambre}}</p>
+                                <p class="card-text text-center"><strong>Type de lit :</strong>{{c.type_lit}}</p>
+                                <p class="card-text text-center"><strong>Nbre Personnes :</strong>{{c.nbr_personne}}</p>
+                            </div>
+                        </div>
+                    </div>
+                        <br><br><br>
+                        <div class="col-sm-8">
+                            <form action="#" class="row" method="post">
+                                {% csrf_token %}
+                                <div class="col-sm-4">
+                                    <div class="col">
+                                        <label  class="form-label">Nom</label>
+                                        <input type="text" name="nom" class="form-control" required>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Prénoms</label>
+                                        <input type="text" name="prenom" class="form-control" required>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Telephone</label>
+                                        <input type="text" name="Telephone" class="form-control" required>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Provenance</label>
+                                        <input type="Text" name="provenance" class="form-control" required>
+                                    </div>  
+                                </div>
+                                
+                                <div class="col-sm-4">
+                                    <div class="col">
+                                        <label for="#" class="form-label">Type de pièce</label>
+                                        <select class="form-control" name="type_piece" aria-label="Default select example">
+                                            <option selected class="text-center">--Choix--</option>
+                                            <option value="CNIB">CNIB</option>
+                                            <option value="PASSEPORT">PASSEPORT</option>
+                                            <option value="CARTE CONSULAIRE">CARTE CONSULAIRE</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Numéro de la pièce</label>
+                                        <input type="text" name="num_piece" class="form-control" required>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Date d'expiration pièce</label>
+                                        <input type="date" name="date_expire" class="form-control" required>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Email</label>
+                                        <input type="email"  name="email" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    
+                                    <div class="col">
+                                        <label class="form-label">Date d'arrivée</label>
+                                        <input type="date" id="date_arriver" name="date_arriver" class="form-control" required>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Date de départ</label>
+                                        <input type="date" id="date_depart" name="date_depart" class="form-control" required>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="form-label">Mode de paiement</label>
+                                        <select class="form-control" name="mode_paye" aria-label="Default select example" required>
+                                            <option selected class="text-center">--Choix--</option>
+                                            <option value="Mobile Money">Mobile Money</option>
+                                            <option value="Virement Bancaire">Virement Bancaire</option>
+                                            <option value="Chèque">Chèque</option>
+                                            <option value="Espèce">Espèce</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label">Prix de la chambre</label>
+                                        <input type="text" id="prix_local" name="prix_local" readonly value="{{ c.prix_local }} FCFA" class="form-control">
+                                    </div>
+                                </div>
+                                <label>.</label>
+                                <h5 class="alert alert-info">
+                                    <p>Nombre de jour(s): <span id="nombre_de_jours"></span></p>
+                                    <p>Total à payer: <span id="total_a_payer"></span></p>
+                                </h5>
+                                <button type="submit" class="btn btn-success">Valider</button>
+                            </form> 
+                        </div>
+                </div>
+            </div>
+            
+
+        </div>
+
+    </div>
+    {% endif %}
+
+    
+
+    <script>
+        function calculateDays() {
+    var date_arriver = document.getElementById("date_arriver").value;
+    var date_depart = document.getElementById("date_depart").value;
+    var prix_local = parseFloat(document.getElementById("prix_local").value); // Récupération du prix local depuis le champ caché
+    var remiseInput = parseFloat(document.getElementById("remise"));
+
+    var remise = 0;
+    if (remiseInput) {
+        remise = parseFloat(remiseInput.value) || 0; // Récupération de la valeur de remise ou 0 si non défini
+    } else {
+        console.error("Le champ de remise n'existe pas.");
+    }
+
+    console.log("Date d'arrivée:", date_arriver);
+    console.log("Date de départ:", date_depart);
+    console.log("Prix local:", prix_local);
+    console.log("Remise:", remise);
+
+    if (!date_arriver || !date_depart) {
+        console.error("Les dates doivent être sélectionnées");
+        return;
+    }
+
+    const dateOne = new Date(date_arriver);
+    const dateTwo = new Date(date_depart);
+    const time = Math.abs(dateTwo - dateOne);
+    const days = Math.ceil(time / (1000 * 3600 * 24));
+
+    let totalPayer = days * prix_local; // Calcul du total avant remise
+
+    if (remise > 0) {
+        totalPayer = totalPayer - (totalPayer * remise / 100); // Application de la remise
+    }
+
+    console.log("Nombre de jours:", days);
+    console.log("Total à payer:", totalPayer.toFixed(2) + ' F CFA');
+
+    document.getElementById("nombre_de_jours").textContent = days;
+    document.getElementById("total_a_payer").textContent = totalPayer.toFixed(2) + ' F CFA'; // Affichage du total
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const dateArriverInput = document.getElementById('date_arriver');
+    const dateDepartInput = document.getElementById('date_depart');
+    const remiseInput = document.getElementById('remise');
+
+    dateArriverInput.addEventListener('change', calculateDays);
+    dateDepartInput.addEventListener('change', calculateDays);
+    
+});
+
+    </script>
+
+
+<script>
+    function updateDateTime() {
+        var now = new Date();
+        var day = now.getDate().toString().padStart(2, '0');
+        var month = (now.getMonth() + 1).toString().padStart(2, '0');
+        var year = now.getFullYear();
+        var hours = now.getHours().toString().padStart(2, '0');
+        var minutes = now.getMinutes().toString().padStart(2, '0');
+        var seconds = now.getSeconds().toString().padStart(2, '0');
+        document.getElementById('current-date-time').innerHTML = day + '-' + month + '-' + year + ' ' + hours + ':' + minutes + ':' + seconds;
+    }
+
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
